@@ -34,3 +34,6 @@ const imgList = images
   .join('');
 
 gallery.insertAdjacentHTML("afterbegin", imgList);
+
+
+
