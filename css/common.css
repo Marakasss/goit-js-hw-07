@@ -246,6 +246,7 @@ button:hover {
 @keyframes slight-shake {
   0% {
     transform: rotate(-4deg);
+    
   }
 
   100% {
@@ -254,6 +255,10 @@ button:hover {
 }
 
 .special-bg {
+  background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
   background: url(https://images.unsplash.com/photo-1581299327801-faeb40ea459e?q=80&w=1610&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 }
 
@@ -275,44 +280,7 @@ font-family: "Montserrat",
 
 /* ---------------Task6---------------- */
 
-.smiley {
-  width: 30px;
-  height: 30px;
-  background-color: yellow;
-  border-radius: 50%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
 
-.eye {
-  width: 15%;
-  height: 15%;
-  background-color: black;
-  border-radius: 50%;
-  position: absolute;
-  top: 30%;
-}
-
-.eye.left {
-  left: 25%;
-}
-
-.eye.right {
-  right: 25%;
-}
-
-.mouth {
-  width: 50%;
-  height: 20%;
-  border-bottom: 5px solid black;
-  border-radius: 0 0 50px 50px;
-  position: absolute;
-  bottom: 20%;
-}
 
 #boxes {
   display: flex;
@@ -320,16 +288,7 @@ font-family: "Montserrat",
   justify-content: center;
 }
 
-.alert-text {
-  text-align: center;
-    font-family: "Montserrat",
-      sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.04em;
-    color: #d81515;
-}
+
 
 #controls > button:last-child {
   margin-top: 10px;
@@ -339,4 +298,42 @@ font-family: "Montserrat",
   margin-bottom: 40px;
 }
 
+#boxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 44px;
+}
+
+.alert-animation {
+  animation: horizontal-shaking 0.1s ease-in-out infinite alternate;
+    animation-iteration-count: 6;
+}
+
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0)
+  }
+
+  25% {
+    transform: translateX(2px)
+  }
+
+  50% {
+    transform: translateX(-2px)
+  }
+
+  75% {
+    transform: translateX(2px)
+  }
+
+  100% {
+    transform: translateX(0)
+  }
+}
+
+input::placeholder {
+  color: #ccf0f0;
+  opacity: 0.5;
+}
 

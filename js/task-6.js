@@ -4,88 +4,89 @@ function getRandomHexColor() {
     .padStart(6, 0)}`;
 }
 
-const emoji = '<div class="smiley"><div class="eye left"></div><div class="eye right"></div><div class="mouth"></div></div>'
+
 const createBtn = document.querySelector('button[data-create]');
 const destroyBtn = document.querySelector('button[data-destroy]');
 const itemBox = document.querySelector('#boxes');
 const input = document.querySelector('input');
-const controls = document.querySelector('#controls')
+const controls = document.querySelector('#controls');
 document.body.classList.add("special-bg");
+input.setAttribute('placeholder', '1 - 100')
+
 
 //TAKE INPUT VALUE
-let inputValue = 0;
-input.addEventListener('input', () => {
-  inputValue = Number(input.value);
-});
+function getInputValue() {
+  return Number(input.value) || 0;
+}
 
-//CREATE-ITEMS FUNCTION
-function createSmiley() {
-   
-   destroyBoxes();
-
-  if (inputValue > 0 && inputValue <= 100) {
-    let width = 30;
-    let height = 30;
-    
-    for (let i = 0; i < inputValue; i++) {
-
-      itemBox.insertAdjacentHTML("beforeend", emoji);
-      
-      const smile = itemBox.querySelector('.smiley:last-child');
-     
-      smile.style.width = `${width}px`;
-      smile.style.height = `${height}px`;
-      smile.style.backgroundColor = getRandomHexColor();
-      
-      width += 10;
-      height += 10;
-    }
-    input.value = "";
-    inputValue = 0;
-    removeAlert();
-  }
-  else {
-    showAlert('Value must be from 1 to 100');
-  }
-};
-
-//ALERT IF INPUT NOT VALID
+//IF INPUT NOT VALID
 function showAlert(message) {
-  removeAlert();
-  const alert = document.createElement('p');
-  alert.textContent = message;
-  alert.classList.add('alert-text');
-  alert.id = 'alertMessage';
-  controls.append(alert);
+  input.value = '';
+  input.setAttribute('placeholder', message);
+  input.classList.add('alert-animation');
+  setTimeout(() => {
+    input.classList.remove('alert-animation');
+  }, 1000); 
 };
 
 function removeAlert() {
-  const existingAlert = document.querySelector('#alertMessage');
-  if (existingAlert) {
-    existingAlert.remove();
-  }
+  input.classList.remove('alert-animation');
+  input.removeAttribute('placeholder');
 };
 
-//CREATE SMILES))
-createBtn.addEventListener('click', createSmiley);
+
+
+//CREATE-ITEMS FUNCTION
+function createBoxes() {
+  destroyBoxes();
+  let inputValue = getInputValue();
+  
+  if (inputValue > 0 && inputValue <= 100) {
+    let width = 30;
+    let height = 30;
+    let box = '';
+    const addedContent = [];
+    
+    for (let i = 0; i < inputValue; i++) {
+      box = `<div style="width: ${width}px; height: ${height}px; background-color: ${getRandomHexColor()}"></div>`;
+      addedContent.push(box);
+      width += 10;
+      height += 10;
+    }
+
+    itemBox.insertAdjacentHTML("beforeend", addedContent.join(''));
+    input.value = "";
+    removeAlert();
+  } else {
+    console.log(inputValue);
+    showAlert('Invalid Value! Enter from 1 to 100');
+  }
+}
+
+
+
+//CREATE-DESTROY CONTENT BTNS EVENTS
+createBtn.addEventListener('click', () => {
+  createBoxes();
+});
+
 input.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    createSmiley()
+    createBoxes();
   }
 });
 
-
-//DESTROY SMILES))
+//DESTROY CONTENT
 function destroyBoxes() {
-   
-    itemBox.innerHTML = '';
-    removeAlert();
-  
+  itemBox.innerHTML = '';
+  input.setAttribute('placeholder', '1 - 100');
 }
 
 destroyBtn.addEventListener('click', destroyBoxes);
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Delete') {
-    destroyBoxes()
+    destroyBoxes();
   }
 });
+
+
